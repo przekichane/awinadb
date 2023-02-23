@@ -1,3 +1,3 @@
-module yellope
+module awinadb
 
 go 1.19
