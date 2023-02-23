@@ -127,12 +127,15 @@ func main() {
 	const PLATFORM_TOOLS_URL string = "https://dl.google.com/android/repository/platform-tools-latest-windows.zip"
 
 	// Download platform tools archive
+	fmt.Println("Downloading...")
 	download(PLATFORM_TOOLS_PATH+"platform-tools.zip", PLATFORM_TOOLS_URL)
 
 	// Extract the platform tools
+	fmt.Println("Extracting...")
 	unzip(PLATFORM_TOOLS_PATH+"platform-tools.zip", PLATFORM_TOOLS_PATH)
 
 	// Remove archive
+	fmt.Println("Cleaning up...")
 	os.Remove(PLATFORM_TOOLS_PATH + "platform-tools.zip")
 
 	fmt.Println("All done! Your platform tools are installed to C:\\platform-tools!")
