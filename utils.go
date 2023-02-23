@@ -52,6 +52,8 @@ func Unzip(src, dest string) error {
 
 		path := filepath.Join(dest, f.Name)
 
+		fmt.Println("Extracting " + f.Name + " to " + path)
+
 		// Check for ZipSlip (Directory traversal)
 		if !strings.HasPrefix(path, filepath.Clean(dest)+string(os.PathSeparator)) {
 			return fmt.Errorf("illegal file path: %s", path)

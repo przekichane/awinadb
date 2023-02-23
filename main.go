@@ -11,19 +11,41 @@ func main() {
 
 	fmt.Println("Installing latest google platform tools...")
 
-	const PLATFORM_TOOLS_URL string = "https://dl.google.com/android/repository/platform-tools-latest-windows.zip"
-	const PLATFORM_TOOLS_PATH string = "C:\\platform-tools"
-	const PLATFORM_TOOLS_NAME string = "platform-tools.zip"
-	PLATFORM_TOOLS_FILE := filepath.Join(PLATFORM_TOOLS_PATH, PLATFORM_TOOLS_NAME)
-
-	// Exit if directory already exists
-	if _, err := os.Stat(PLATFORM_TOOLS_PATH); err == nil {
-		fmt.Println("Directory " + PLATFORM_TOOLS_PATH + " already exist! Aborting...")
-		Exit(1)
+	home, err := os.UserHomeDir()
+	if err != nil {
+		panic(err)
 	}
 
-	// Create inital directory
-	os.Mkdir(PLATFORM_TOOLS_PATH, os.ModePerm)
+	cache, err := os.UserCacheDir()
+	if err != nil {
+		panic(err)
+	}
+
+	const PLATFORM_TOOLS_URL string = "https://dl.google.com/android/repository/platform-tools-latest-windows.zip"
+	const PLATFORM_TOOLS_NAME string = "platform-tools.zip"
+	PLATFORM_TOOLS_PATH := filepath.Join(home, "platform-tools")
+	PLATFORM_TOOLS_FILE := filepath.Join(cache, PLATFORM_TOOLS_NAME)
+
+	// Handle the case where the directory already exists
+	if _, err := os.Stat(PLATFORM_TOOLS_PATH); err == nil {
+		fmt.Println("Directory " + PLATFORM_TOOLS_PATH + " already exist!")
+
+		// Ask user whether to overwrite
+		var response string
+		fmt.Print("Overwrite? (y/n) ")
+		fmt.Scanln(&response)
+
+		if response == "y" || response == "Y" {
+			err = os.RemoveAll(PLATFORM_TOOLS_PATH)
+			if err != nil {
+				fmt.Println("Failed to remove " + PLATFORM_TOOLS_PATH + "! Aborting...")
+				Exit(1)
+			}
+		} else {
+			fmt.Println("Aborting...")
+			Exit(1)
+		}
+	}
 
 	// Download platform tools archive
 	fmt.Println("Downloading...")
@@ -31,7 +53,7 @@ func main() {
 
 	// Extract the platform tools
 	fmt.Println("Extracting...")
-	Unzip(PLATFORM_TOOLS_FILE, PLATFORM_TOOLS_PATH)
+	Unzip(PLATFORM_TOOLS_FILE, home)
 
 	// Remove archive
 	fmt.Println("Cleaning up...")
