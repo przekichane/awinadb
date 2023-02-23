@@ -5,7 +5,16 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"runtime"
 )
+
+func checkOS() {
+	if runtime.GOOS != "windows" {
+		fmt.Println("This program works only on windows! Aborting")
+		os.Exit(1)
+	}
+
+}
 
 func download(path string, url string) error {
 	resp, err := http.Get(url)
@@ -27,6 +36,8 @@ func download(path string, url string) error {
 }
 
 func main() {
+	checkOS()
+
 	fmt.Println("Installing latest google platform tools...")
 
 	const PLATFORM_TOOLS_PATH string = "C:\\platform-tools\\"
