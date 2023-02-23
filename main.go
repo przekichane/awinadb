@@ -8,10 +8,16 @@ import (
 	"runtime"
 )
 
+func exit(code int) {
+	fmt.Println("Press any key to exit...")
+	fmt.Scanln()
+	os.Exit(code)
+}
+
 func checkOS() {
 	if runtime.GOOS != "windows" {
 		fmt.Println("This program works only on windows! Aborting")
-		os.Exit(1)
+		exit(1)
 	}
 
 }
@@ -42,6 +48,12 @@ func main() {
 
 	const PLATFORM_TOOLS_PATH string = "C:\\platform-tools\\"
 
+	// Exit if directory already exists
+	if _, err := os.Stat(PLATFORM_TOOLS_PATH); err == nil {
+		fmt.Println("Directory " + PLATFORM_TOOLS_PATH + " already exist! Aborting...")
+		exit(1)
+	}
+
 	// Create inital directory
 	os.Mkdir(PLATFORM_TOOLS_PATH, os.ModePerm)
 
@@ -51,6 +63,5 @@ func main() {
 	download(PLATFORM_TOOLS_PATH+"platform-tools.zip", PLATFORM_TOOLS_URL)
 
 	fmt.Println("All done! Your platform tools are installed to C:\\platform-tools!")
-	fmt.Println("Press any key to exit...")
-	fmt.Scanln()
+	exit(0)
 }
