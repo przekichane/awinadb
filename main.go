@@ -9,7 +9,7 @@ import (
 )
 
 func exit(code int) {
-	fmt.Println("Press any key to exit...")
+	fmt.Println("Press Enter key to exit...")
 	fmt.Scanln()
 	os.Exit(code)
 }
