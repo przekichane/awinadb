@@ -7,8 +7,6 @@ import (
 )
 
 func main() {
-	CheckOS()
-
 	fmt.Println("Installing latest google platform tools...")
 
 	home, err := os.UserHomeDir()
