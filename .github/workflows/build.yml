@@ -16,10 +16,15 @@ jobs:
       with:
         go-version: 1.19
 
-    - name: Build
+    - name: Build 64bit
       run: |
-        GOOS=windows GOARCH=amd64 go build .
+        GOOS=windows GOARCH=amd64 go build -o awinadb_x64.exe .
+
+    - name: Build 32bit
+      run: |
+        GOOS=windows GOARCH=386 go build -o awinadb_x86.exe .
+
     - uses: actions/upload-artifact@v2
       with: 
         name: awinadb
-        path: awinadb.exe
+        path: awinadb_*.exe
