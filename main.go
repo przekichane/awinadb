@@ -37,6 +37,6 @@ func main() {
 	fmt.Println("Cleaning up...")
 	os.Remove(PLATFORM_TOOLS_FILE)
 
-	fmt.Println("All done! Your platform tools are installed to C:\\platform-tools!")
+	fmt.Println("All done! Your platform tools are installed to " + PLATFORM_TOOLS_PATH + "!")
 	Exit(0)
 }
