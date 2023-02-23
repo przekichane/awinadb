@@ -12,7 +12,7 @@ func main() {
 	fmt.Println("Installing latest google platform tools...")
 
 	const PLATFORM_TOOLS_URL string = "https://dl.google.com/android/repository/platform-tools-latest-windows.zip"
-	const PLATFORM_TOOLS_PATH string = "C:\\platform-tools\\"
+	const PLATFORM_TOOLS_PATH string = "C:\\platform-tools"
 	const PLATFORM_TOOLS_NAME string = "platform-tools.zip"
 	PLATFORM_TOOLS_FILE := filepath.Join(PLATFORM_TOOLS_PATH, PLATFORM_TOOLS_NAME)
 
