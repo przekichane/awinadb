@@ -4,7 +4,6 @@ import (
 	"archive/zip"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"os"
 	"os/user"
@@ -26,7 +25,6 @@ func CheckOS() {
 		fmt.Println("This program works only on windows! Aborting")
 		Exit(1)
 	}
-
 }
 
 func Unzip(src, dest string) error {
@@ -122,18 +120,16 @@ func appendToPath(value string) {
 
 	k, err := registry.OpenKey(registry.USERS, SID+`\Environment`, registry.ALL_ACCESS)
 	if err != nil {
-		fmt.Println(err)
-		Exit(1)
+		panic(err)
 	}
 	defer k.Close()
 
 	currentPath, _, err := k.GetStringValue(key)
 	if err != nil {
-		fmt.Println(err)
-		Exit(1)
+		panic(err)
 	}
 	err = k.SetStringValue(key, currentPath+";"+value)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 }

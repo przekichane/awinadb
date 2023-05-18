@@ -38,12 +38,10 @@ func main() {
 		if response == "y" || response == "Y" {
 			err = os.RemoveAll(PLATFORM_TOOLS_PATH)
 			if err != nil {
-				fmt.Println("Failed to remove " + PLATFORM_TOOLS_PATH + "! Aborting...")
-				Exit(1)
+				panic("Failed to remove " + PLATFORM_TOOLS_PATH + "! Aborting...")
 			}
 		} else {
-			fmt.Println("Aborting...")
-			Exit(1)
+			panic("Aborting...")
 		}
 	}
 
