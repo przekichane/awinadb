@@ -4,11 +4,15 @@ import (
 	"archive/zip"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"os"
+	"os/user"
 	"path/filepath"
 	"runtime"
 	"strings"
+
+	"golang.org/x/sys/windows/registry"
 )
 
 func Exit(code int) {
@@ -108,4 +112,28 @@ func Download(path string, url string) error {
 
 	_, err = io.Copy(out, resp.Body)
 	return err
+}
+
+func appendToPath(value string) {
+	key := "Path"
+
+	u, _ := user.Current()
+	SID := u.Uid
+
+	k, err := registry.OpenKey(registry.USERS, SID+`\Environment`, registry.ALL_ACCESS)
+	if err != nil {
+		fmt.Println(err)
+		Exit(1)
+	}
+	defer k.Close()
+
+	currentPath, _, err := k.GetStringValue(key)
+	if err != nil {
+		fmt.Println(err)
+		Exit(1)
+	}
+	err = k.SetStringValue(key, currentPath+";"+value)
+	if err != nil {
+		log.Fatal(err)
+	}
 }

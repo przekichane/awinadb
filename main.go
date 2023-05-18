@@ -55,6 +55,9 @@ func main() {
 	fmt.Println("Extracting...")
 	Unzip(PLATFORM_TOOLS_FILE, home)
 
+	fmt.Println("Appending " + PLATFORM_TOOLS_PATH + " to user's Path...")
+	appendToPath(PLATFORM_TOOLS_PATH)
+
 	// Remove archive
 	fmt.Println("Cleaning up...")
 	os.Remove(PLATFORM_TOOLS_FILE)
