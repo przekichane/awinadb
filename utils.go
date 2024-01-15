@@ -128,6 +128,12 @@ func appendToPath(value string) {
 	if err != nil {
 		panic(err)
 	}
+
+	if strings.Contains(currentPath, value) {
+		fmt.Println(value + " already in the user's Path, skipping")
+		return
+	}
+
 	err = k.SetStringValue(key, currentPath+";"+value)
 	if err != nil {
 		panic(err)
