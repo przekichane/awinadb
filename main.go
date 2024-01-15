@@ -4,10 +4,14 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 )
 
 func main() {
-	CheckOS()
+	if runtime.GOOS != "windows" {
+		fmt.Println("This program works only on windows! Aborting")
+		Exit(1)
+	}
 
 	fmt.Println("Installing latest google platform tools...")
 

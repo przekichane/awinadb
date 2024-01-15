@@ -8,7 +8,6 @@ import (
 	"os"
 	"os/user"
 	"path/filepath"
-	"runtime"
 	"strings"
 
 	"golang.org/x/sys/windows/registry"
@@ -18,13 +17,6 @@ func Exit(code int) {
 	fmt.Println("Press Enter key to exit...")
 	fmt.Scanln()
 	os.Exit(code)
-}
-
-func CheckOS() {
-	if runtime.GOOS != "windows" {
-		fmt.Println("This program works only on windows! Aborting")
-		Exit(1)
-	}
 }
 
 func Unzip(src, dest string) error {
